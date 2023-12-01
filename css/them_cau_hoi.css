@@ -1,0 +1,34 @@
+/* Thêm vào file CSS (ví dụ: xem_truoc.css) hoặc vào phần style của trang HTML */
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group-text {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-check-input {
+    width: 40px;
+    height: 14px;
+    margin: 0;
+}
+
+.form-control[readonly] {
+    background-color: #f8f9fa; /* Màu nền xám nhạt */
+    border: 1px solid #ced4da; /* Viền */
+    color: #495057; /* Màu chữ */
+    cursor: not-allowed; /* Không cho phép chọn */
+}
+
+/* Nếu bạn muốn làm cho radio button và text nằm cùng dòng */
+.input-group-prepend {
+    flex: 0 0 30px; /* Điều chỉnh chiều rộng của phần tiền tố */
+}
+
+.input-group-text, .form-check-input, .form-control {
+    border-radius: 0; /* Loại bỏ bo tròn */
+}
