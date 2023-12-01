@@ -63,10 +63,6 @@ include '../function.php';
             <p class="h3">Danh sách câu hỏi</p>
             <table class="table table-striped">
                 <?php
-                $sql_check_role="SELECT * FROM `user`";
-                $result_check_role = mysqli_query($conn, $sql_check_role);
-                $row_check_role = mysqli_fetch_assoc($result_check_role);
-                $role = $row_check_role['role'];
                 if ($_SESSION['login']['role'] == 'admin' ) {
                     if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
                         if (isset($_POST['update'])) {
