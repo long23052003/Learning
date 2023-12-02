@@ -2,16 +2,7 @@
 include '../function.php';
 
 // Kiểm tra xác nhận nộp bài
-if (isset($_POST['btn_nop_bai'])) {
-    echo '<script>
-            if (confirm("Bạn có chắc chắn muốn nộp bài không?")) {
-                // Xử lý nộp bài ở đây (có thể gửi dữ liệu về server nếu cần)
-                alert("Bài của bạn đã được nộp!");
-            } else {
-                alert("Bạn đã hủy nộp bài!");
-            }
-        </script>';
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,6 +107,12 @@ if (isset($_POST['btn_nop_bai'])) {
             ?>
             <form action="" method="post">
             <input type="submit" name="btn_nop_bai" class="btn btn-danger" aria-label="Text input with radio button" value="Nop bai">
+            <?php
+            if (isset($_POST['btn_nop_bai'])) {
+                
+                echo 'nop bai thanh cong';
+            }
+            ?>
             </form>
         </div>
 
