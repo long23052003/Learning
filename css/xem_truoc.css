@@ -1,34 +1,42 @@
-/* Thêm vào file CSS (ví dụ: xem_truoc.css) hoặc vào phần style của trang HTML */
-.input-group {
-    margin-bottom: 10px;
+.btn {
+    background-color: #0373fc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    width: 100%;
 }
 
-.input-group-text {
-    width: 40px;
-    height: 40px;
+img{
+    width: 800px;
+    margin: 10px 100px;
+}
+
+table,
+tr,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+}
+.container{
+    width: 70%;
+    margin-top: 4%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.form{
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
-
-.form-check-input {
-    width: 20px;
-    height: 20px;
-    margin: 0;
-}
-
-.form-control[readonly] {
-    background-color: #f8f9fa; /* Màu nền xám nhạt */
-    border: 1px solid #ced4da; /* Viền */
-    color: #495057; /* Màu chữ */
-    cursor: not-allowed; /* Không cho phép chọn */
-}
-
-/* Nếu bạn muốn làm cho radio button và text nằm cùng dòng */
-.input-group-prepend {
-    flex: 0 0 30px; /* Điều chỉnh chiều rộng của phần tiền tố */
-}
-
-.input-group-text, .form-check-input, .form-control {
-    border-radius: 0; /* Loại bỏ bo tròn */
+.form input{
+    padding: 10px;
+    margin: 10px;
+    width: 100%;
 }

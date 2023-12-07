@@ -1,0 +1,134 @@
+body {
+    background: url("../images/backgroundlogin.jpg") no-repeat center/99.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 99vh;
+    flex-direction: column;
+}
+
+.header {
+    font-size: 48px;
+    color: orange;
+}
+
+.register-form {
+    border: 5px solid #366d87;
+    width: 350px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2%;
+    padding: 25px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.login-form {
+    border: 5px solid #366d87;
+    width: 300px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5%;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.pass-form {
+    border: 5px solid #366d87;
+    width: 350px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2%;
+    padding: 25px;
+    border-radius: 10px;
+    position: relative;
+}
+
+#title {
+    position: absolute;
+    top: -25px;
+    left: 20px;
+    background-color: #f7f9fa;
+    padding: 10px;
+    color: #366d87;
+}
+
+.form-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input input,
+select {
+    margin: 10px 0;
+    padding: 10px;
+    border: 3px solid #366d87;
+    border-radius: 20px;
+    outline: none;
+}
+
+.form-input input:focus {
+    border: 3px solid orange;
+}
+
+.form-input {
+    font-weight: bold;
+    color: #366d87;
+}
+
+.input-img {
+    border: none;
+    display: flex;
+}
+
+.btn-submit {
+    width: 100%;
+    border: 3px solid #366d87;
+    padding: 5px;
+    background-color: transparent;
+    border-radius: 20px;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #366d87;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s;
+}
+
+.btn-submit:hover {
+    background-color: #fa9c20;
+    color: #fff;
+    transition-duration: 0.1s;
+}
+
+.btn-redirect {
+    border: none;
+    background-color: transparent;
+    margin-top: 5px;
+    font-weight: bolder;
+}
+
+.btn-redirect a {
+    color: orangered;
+}
+
+#img-label {
+    background-color: orange;
+    color: white;
+    padding: 5px;
+    font-family: sans-serif;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+}

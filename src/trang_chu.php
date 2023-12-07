@@ -1,9 +1,3 @@
-<?php
-include '../function.php';
-
-// Kiểm tra xác nhận nộp bài
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,31 +5,22 @@ include '../function.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ trả lời câu hỏi</title>
-    <!-- Begin bootstrap cdn -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- End bootstrap cdn -->
-    <link rel="stylesheet" href="../css/xem_truoc.css">
-    <style>
-        img {
-            max-width: 400px;
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/trang_chu.css">
+    <link rel="stylesheet" href="../css/footer.css">
 </head>
 
-<body>
+<body onload="starttime()">
     <?php
+    include '../function.php';
     include 'navbar.php';
     ?>
-    <main style="min-height: 100vh; max-width: 100%;">
-
-        <div id="action" style="margin: 20px 0 0 13%;">
-            <p class="h3">Khóa học
+    <main>
+        <div id="action">
+            <h3>
+                <a href="../index.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+                Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -47,75 +32,142 @@ include '../function.php';
                     echo "";
                 }
                 ?>
-            </p>
-            <a href="khoa_hoc.php" class="btn btn-primary">Trở lại</a>
-
-            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                Thêm câu hỏi
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="them_cau_hoi.php?id_khoa_hoc=<?php echo $id_khoa_hoc ?>">Câu hỏi điền</a></li>
-                <li><a class="dropdown-item" href="them_cau_hoi_tn.php?id_khoa_hoc=<?php echo $id_khoa_hoc ?>">Câu hỏi trắc nghiệm 1 đáp án</a></li>
-                <li><a class="dropdown-item" href="them_cau_hoi.php?id_khoa_hoc=<?php echo $id_khoa_hoc ?>">Câu hỏi nối</a></li>
-            </ul>
+            </h3>
         </div>
-        <div class="d-flex flex-wrap flex-column align-items-center" style="padding: 1%;margin: 5% 0 0 0; ">
-            <?php
-            // Truy vấn để lấy danh sách câu hỏi
-            echo '<div class="card" style="width: 100rem; margin: 10px;">';
-            echo '<div class="card-body">';
-            $Stt = 1;
-            $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc";
-            $result = mysqli_query($conn, $query);
-            // Kiểm tra xem có câu hỏi nào hay không
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    if ($row['dang_cau_hoi'] === 'Điền') {
-                        echo '<div>Câu: ' . $Stt . '</div>';
-                        echo '<div>' . $row['ten_cau_hoi'] . '</div';
-                        echo '<div class="input-group mb-3">
-                        <lable class="input-group-text" for="inputGroupSelect01">Nhập đáp án</lable>
-                        <input name="dap_an" type="text" class="form-control" value=" ">
-                        </div>';
-                        $Stt++;
-                    } else if ($row['dang_cau_hoi'] === 'Trắc nghiệm') {
-                        $answers = explode(",", $row['dap_an']);
-                        $answers = array_map(function ($answers) {
-                            return str_replace("(Đúng)", "", $answers);
-                        }, $answers);
-                        echo '<div>Câu: ' . $Stt . '</div>';
-                        echo '<div>' . $row['ten_cau_hoi'] . '</div>';
-                        echo  '<img class="img-fluid" src="../images/quiz/' . $row['file_tai_len'] . '" alt="">';
-                        foreach ($answers as $answer) {
-                            echo '<div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <div class="input-group-text">';
-                            echo '<input class"form-check-input" name="da_tl" type="radio"' . (isset($_POST['da_tl']) && $_POST['da_tl'] === $answer ? 'checked' : '') . ' >';
-                            echo '</div>
-                            </div>';
-                            echo '<input type="text" class="form-control" aria-label="Text input with radio button" value="' . $answer . '" readonly><br>';
-                            echo '</div>';
+        <div class="trang_chu">
+            <div>
+                <div id="showtime"></div>
+                <div id="clear-float"></div>
+            </div>
+            <div>
+                <?php
+                // Truy vấn để lấy danh sách câu hỏi
+                $Stt = 1;
+                $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc AND trang_thai=1";
+                $result = mysqli_query($conn, $query);
+                // Kiểm tra xem có câu hỏi nào hay không
+                if (mysqli_num_rows($result) > 0) {
+                    echo '<form action="ket_qua.php?id_khoa_hoc='.$id_khoa_hoc.'" method="POST" id="qa_form" >';
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        if ($row['trang_thai'] == 1) {
+                            if ($row['dang_cau_hoi'] === 'Điền') {
+                                echo '<div class="title_ques">Câu ' . $Stt . ': ' . $row['ten_cau_hoi'] . '</div>';
+                                echo '<div class="answers">';
+                                echo '<div class="qa">';
+                                echo <<<EOF
+                                <div class="da">
+                                    <lable class="label" for="inputGroupSelect01">Nhập đáp án</lable><br/>
+                                    <input name="dap_an[{$row['id_cau_hoi']}]" type="text" class="form-control">
+                                </div>
+                                EOF;
+                                echo '</div>';
+                                echo  '<img class="img-fluid" width="400px" src="../images/quiz/' . $row['file_tai_len'] . '" alt="">';
+                                echo '</div>';
+                                $Stt++;
+                            } else if ($row['dang_cau_hoi'] === 'Trắc nghiệm') {
+                                $answers = explode(",", $row['dap_an']);
+                                $answers = array_map(function ($answers) {
+                                    return str_replace("(Đúng)", "", $answers);
+                                }, $answers);
+                                echo '<div class="title_ques">Câu: ' . $Stt . ': ' . $row['ten_cau_hoi'] . '</div>';
+                                echo '<div class="answers">';
+                                echo '<div class="qa">';
+                                foreach ($answers as $answer) {
+                                    echo '<div class="da">';
+                                    echo '<input class"check_input" name="dap_an[' . $row['id_cau_hoi'] . ']" type="radio" value="' . $answer . '" >';
+                                    echo '<p>' . $answer . '</p>';
+                                    echo '</div>';
+                                }
+                                echo '</div>';
+                                echo  '<img class="img-fluid" width="400px" src="../images/quiz/' . $row['file_tai_len'] . '" alt="">';
+                                echo '</div>';
+                                $Stt++;
+                            } else if ($row['dang_cau_hoi'] === 'Trắc nghiệm nhiều đáp án') {
+                                $answers = explode(",", $row['dap_an']);
+                                $answers = array_map(function ($answers) {
+                                    return str_replace("(Đúng)", "", $answers);
+                                }, $answers);
+                                echo '<div class="title_ques">Câu: ' . $Stt . ': ' . $row['ten_cau_hoi'] . '</div>';
+                                echo '<div class="answers">';
+                                echo '<div class="qa">';
+                                foreach ($answers as $answer) {
+                                    echo '<div class="da">';
+                                    echo '<input class"check_input" name="dap_an[' . $row['id_cau_hoi'] . '][]" type="checkbox" value="' . $answer . '">';
+                                    echo '<p>' . $answer . '</p>';
+                                    echo '</div>';
+                                }
+                                echo '</div>';
+                                echo  '<img class="img-fluid" width="400px" src="../images/quiz/' . $row['file_tai_len'] . '" alt="">';
+                                echo '</div>';
+                                $Stt++;
+                            } else if ($row['dang_cau_hoi'] === 'Nối câu') {
+                                $answers = explode(",", $row['dap_an']);
+                                $questions = explode(",", $row['ten_cau_hoi']);
+                                $answers = array_map(function ($answers) {
+                                    return str_replace("(Đúng)", "", $answers);
+                                }, $answers);
+                                $numberques = $row['so_luong_dap_an'];
+                                echo '<div class="title_ques">Câu: ' . $Stt . '</div>';
+                                echo '<div class="answers">';
+                                echo '<div class="noi-ques">';
+                                for ($i = 0; $i < $numberques; $i++) {
+                                    echo '<div class="both"><div class="ques">';
+                                    echo '<p> Câu hỏi ' . ($i + 1) . ': ' . $questions[$i] . '</p>';
+                                    echo '</div>';
+                                    echo '<div class="da">';
+                                    echo '<input type="number" class="form-control" name="dap_an[' . $row['id_cau_hoi'] . '][' . $i . ']"><br>';
+                                    echo '<p> Đáp án ' . chr(64 + $i + 1) . '. ' . $answers[$i] . '</p>';
+                                    echo '</div></div>';
+                                }
+                                echo '</div>';
+                                echo  '<img class="img-fluid" width="400px" src="../images/quiz/' . $row['file_tai_len'] . '" alt="">';
+                                echo '</div>';
+                                $Stt++;
+                            }
                         }
-                        echo '<hr>';
-                        $Stt++;
+                    }
+                    echo '<hr /><input type="submit" name="btn_nop_bai" class="btn submit" id="submitButton" value="Nộp bài"></form>';
+                } else {
+                    echo '<p>Không có câu hỏi nào.</p>';
+                }
+                if (isset($_POST['btn_nop_bai'])) {
+                    if (isset($_POST['dap_an'])) {
+                        var_dump($_POST['dap_an']);
                     }
                 }
-            } else {
-                echo '<p>Không có câu hỏi nào.</p>';
-            }
-            echo '</div> </div>';
-            ?>
-            <form action="" method="post">
-            <input type="submit" name="btn_nop_bai" class="btn btn-danger" aria-label="Text input with radio button" value="Nop bai">
-            <?php
-            if (isset($_POST['btn_nop_bai'])) {
-                
-                echo 'nop bai thanh cong';
-            }
-            ?>
-            </form>
+                ?>
+            </div>
         </div>
+        <script>
+            var tim;
+            <?php
+                echo 'var min = 1 * '.mysqli_num_rows($result).';';
+            ?>
+            var sec = 0;
+            var f = new Date();
 
+            function starttime() {
+                showtime();
+            }
+
+            function showtime() {
+                if (parseInt(sec) > 0) {
+                    sec = parseInt(sec) - 1;
+                } else {
+                    if (parseInt(min) > 0) {
+                        min = parseInt(min) - 1;
+                        sec = 59;
+                    } else {
+                        document.getElementById("showtime").innerHTML = "00 : 00";
+                        var submitButton = document.getElementById("submitButton");
+                        submitButton.click(); // Kích hoạt sự kiện click của nút submit
+                        return;
+                    }
+                }
+                document.getElementById("showtime").innerHTML = (min < 10 ? "0" : "") + min + " : " + (sec < 10 ? "0" : "") + sec;
+                tim = setTimeout(showtime, 1000);
+            }
+        </script>
     </main>
     <?php
     include 'footer.php';

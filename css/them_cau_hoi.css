@@ -1,34 +1,54 @@
-/* Thêm vào file CSS (ví dụ: xem_truoc.css) hoặc vào phần style của trang HTML */
-.input-group {
-    margin-bottom: 10px;
-}
-
-.input-group-text {
-    width: 40px;
-    height: 40px;
+.container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.form-check-input {
-    width: 40px;
-    height: 14px;
-    margin: 0;
+form {
+    margin-top: 30px;
+    width: 60%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
 }
 
-.form-control[readonly] {
-    background-color: #f8f9fa; /* Màu nền xám nhạt */
-    border: 1px solid #ced4da; /* Viền */
-    color: #495057; /* Màu chữ */
-    cursor: not-allowed; /* Không cho phép chọn */
+.btn {
+    background-color: #366d87;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    text-align: center;
+  }
+
+form div {
+    width: 100%;
+    margin-top: 10px;
 }
 
-/* Nếu bạn muốn làm cho radio button và text nằm cùng dòng */
+input{
+    width: 97.5%;
+    padding: 10px;
+    margin-top: 5px;
+}
+label{
+    color: #366d87;
+}
+
+.form-check-input{
+    width: 20px;
+    margin-right: 20px;
+    padding: 10px;
+}
+
 .input-group-prepend {
-    flex: 0 0 30px; /* Điều chỉnh chiều rộng của phần tiền tố */
+    display: flex;
+    width: 99%;;
 }
-
-.input-group-text, .form-check-input, .form-control {
-    border-radius: 0; /* Loại bỏ bo tròn */
+.ans {
+    display: flex;
 }

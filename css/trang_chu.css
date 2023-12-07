@@ -1,0 +1,98 @@
+.trang_chu {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+#showtime {
+    background-color: orange;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    float: right;
+    color: #fff;
+    font-weight: bold;
+}
+
+#clear-float {
+    clear: right;
+}
+
+.trang_chu .title_ques {
+    font-size: 18px;
+    font-weight: bold;
+    color: #366d87;
+}
+
+.trang_chu .da {
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.trang_chu .da,
+.ques p {
+    margin-left: 10px;
+    color: #366d87;
+}
+
+.trang_chu .da .label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #366d87;
+}
+
+.trang_chu .da input {
+    border: 2px solid #366d87;
+    padding: 7px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.trang_chu .da input:focus {
+    outline: none;
+    border: 2px solid orange;
+}
+
+.trang_chu .answers {
+    display: flex;
+    padding: 20px;
+    align-items: start;
+}
+
+.trang_chu .noi-ques .both {
+    display: flex;
+    align-items: center;
+}
+
+.trang_chu .noi-ques .ques {
+    display: flex;
+    justify-content: space-between;
+}
+
+.trang_chu .noi-ques .ques p {
+    width: 250px;
+}
+
+.trang_chu .noi-ques .da .la {
+    width: 60px;
+    margin-left: 10px;
+}
+
+.trang_chu .noi-ques .da input {
+    width: 40px;
+}
+
+.qa,
+.noi-ques {
+    width: 900px;
+}
+
+.submit {
+    margin-top: 10px;
+    padding: 10px;
+    font-weight: bold;
+}
