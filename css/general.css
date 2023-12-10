@@ -66,23 +66,27 @@ main {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  width: 150px;
+  min-height: 55px;
+  margin: 0 -10px;
 }
 
 .navbar-toggler:hover {
-  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .subnav-content {
+  right: 0;
   display: none;
   position: absolute;
-  right: 20px;
   background-color: #fff;
   width: auto;
-  top: 50px;
   z-index: 1;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 5px;
+  top: 65px;
 }
 
 .navbar-sub:hover .subnav-content {
@@ -100,7 +104,7 @@ main {
 }
 
 .brand {
-  width: 85%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
@@ -118,5 +122,8 @@ main {
   width: 35px;
   height: 35px;
   border-radius: 50px;
-  margin-right: 5px;
+  margin-right: 10px;
+}
+#avt:hover {
+  opacity: 0.8;
 }

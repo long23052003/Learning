@@ -12,6 +12,7 @@ include '../function.php';
     <link rel="stylesheet" href="../css/general.css">
     <link rel="stylesheet" href="../css/trang_ca_nhan.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/bien_tap.css">
 </head>
 <?php
 include 'navbar.php';
@@ -30,7 +31,7 @@ include 'navbar.php';
                                                     $sql = "SELECT * FROM `user` WHERE id_user = '{$_SESSION['login']['id']}'";
                                                     $result = mysqli_query($conn, $sql);
                                                     $row = mysqli_fetch_assoc($result);
-                                                    echo '../images/avt/' . $row['img_avt'];
+                                                    echo '../images/avt/' . $row['img_avt']; // Add timestamp as a query parameter
                                                     ?>" alt="">
                     </div>
                 </div>
@@ -60,6 +61,11 @@ include 'navbar.php';
                                     $row = mysqli_fetch_assoc($result);
                                     echo $row['ten_khoa'] ?>
                         </h3>
+                    </div>
+                    <div class="text">
+                        <form action="" method="post">
+                        <button class="btn btn-table"><a href="sua_thong_tin.php">Sửa thông tin</a></button>
+                        </form>
                     </div>
                 </div>
             </div>

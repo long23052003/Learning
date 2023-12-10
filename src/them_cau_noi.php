@@ -94,13 +94,16 @@
                                 echo "<div class='alert-warning' role='alert'>Vui lòng nhập đầy đủ câu hỏi</div>";
                             } else {
                                 $dap_an_dung = '';
+                                $questionsAndAnswers = [];
                                 for ($i = 0; $i < $num_choices; $i++) {
                                     $cau_hoi = isset($_POST['cauhoi'][$i]) ? $_POST['cauhoi'][$i] : '';
                                     $dap_an = isset($_POST['da'][$i]) ? $_POST['da'][$i] : '';
+                                    $questionsAndAnswers[] = "Câu hỏi $cau_hoi - Đáp án $dap_an";
                                     $dap_an_dung = $dap_an_dung . "${cau_hoi} - ${dap_an}" . (($i == $num_choices - 1) ? '' : ',');
                                 }
                                 $cau_hoi_da[] = ['cau_hoi' => $cau_hoi, 'dap_an' => $dap_an];
                                 shuffle($_POST['da']);
+                                shuffle($_POST['cauhoi']);
                                 $dap_an = isset($_POST['da']) ? implode(',', $_POST['da']) : '';
                                 $tac_gia =  $_SESSION['login']['username'];
                                 $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -114,7 +117,7 @@
                                 $sql = "INSERT INTO `cau_hoi`(`ten_cau_hoi`, `dang_cau_hoi`, `dap_an`, `file_tai_len`,`id_khoa_hoc`,`trang_thai`,`id_user`,`so_luong_dap_an`,`dap_an_dung`) VALUES ('$ten_cau_hoi','$dang_cau_hoi','$dap_an','$file_tai_len','$id_khoa_hoc',0,'$id_user','$num_choices','$dap_an_dung')";
                                 $query = mysqli_query($conn, $sql);
                                 if ($query) {
-                                    echo "<div class='alert-success' role='alert'>Thêm câu hỏi thành công</div>";
+                                    echo "<div class='alert-success' role='alert'>Thêm câu hỏi thành công. Câu hỏi và đáp án:<br>" . implode('<br>', $questionsAndAnswers) . "</div>";
                                 } else {
                                     echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại</div>";
                                 }

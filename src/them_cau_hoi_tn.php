@@ -67,6 +67,7 @@
                     $_POST['da'] = isset($_POST['da']) ? $_POST['da'] : array();
                     for ($i = 0; $i < $num_choices; $i++) {
                         if (isset($_POST['dad']) && $_POST['dad'] == 'dad' . $i) {
+                            $_POST['da'][$i] .= "(Đúng)";
                             $dap_an_dung = str_replace("(Đúng)", "", $_POST['da'][$i]);
                         }
                     }

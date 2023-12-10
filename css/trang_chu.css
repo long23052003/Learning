@@ -1,3 +1,9 @@
+main {
+    padding: 3% 15%;
+    min-height: 72.3vh;
+    background: url('images/images.jpg');
+}
+
 .trang_chu {
     width: 90%;
     margin-left: auto;

@@ -19,7 +19,7 @@
     <main>
         <div id="action">
             <h3>
-                <a href="../index.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+                <a href="khoa_hoc.php" class="btn_back"><i class="fa fa-chevron-left" aria-hidden="true"></i>Trở lại</a>
                 Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
@@ -33,26 +33,19 @@
                 }
                 ?>
             </h3>
-            <!-- Admin không thêm được câu hỏi -->
-            <?php
-            if ($_SESSION['login']['role'] == 'user') {
-                echo  <<<EOD
                     <div class="btn-top">
                         <div class="sub-menu">
                             <p class="dropdown-toggle" data-bs-toggle="dropdown">
                                 Thêm câu hỏi <i class="fa fa-sort-desc" aria-hidden="true"></i>
                             </p>
                             <div class="ques-menu">
-                                <a class="dropdown-item" href="them_cau_hoi.php?id_khoa_hoc={$id_khoa_hoc}">Câu hỏi điền</a>
-                                <a class="dropdown-item" href="them_cau_hoi_tn.php?id_khoa_hoc={$id_khoa_hoc}">Câu hỏi trắc nghiệm 1 đáp án</a>
-                                <a class="dropdown-item" href="them_cau_noi.php?id_khoa_hoc={$id_khoa_hoc}">Câu hỏi nối</a>
-                                <a class="dropdown-item" href="them_cau_nhieu_dap_an.php?id_khoa_hoc={$id_khoa_hoc}">Câu hỏi với trắc nghiệm nhiều đáp án</a>
+                                <a class="dropdown-item" href="them_cau_hoi.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi điền</a>
+                                <a class="dropdown-item" href="them_cau_hoi_tn.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi trắc nghiệm 1 đáp án</a>
+                                <a class="dropdown-item" href="them_cau_noi.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi nối</a>
+                                <a class="dropdown-item" href="them_cau_nhieu_dap_an.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi với trắc nghiệm nhiều đáp án</a>
                             </div>
                         </div>
                     </div>
-                    EOD;
-            }
-            ?>
         </div>
         <?php ?>
         <div class="">
@@ -125,12 +118,12 @@
                                 echo '<td>
                             <form action="" method="post">';
                                 if ($row['trang_thai'] == 0) {
-                                    echo '<input type="submit" class="btn btn-table" name="delete" value="Xóa">';
+                                    echo '<input type="submit" class="btn_xoa btn-table" name="delete" value="Xóa">';
                                     echo '<button class="btn btn-table"><a href="xem_truoc.php?id_khoa_hoc=' . $id_khoa_hoc . '&id_cau_hoi=' . $row['id_cau_hoi'] . '">Xem Trước</a></button>';
-                                    echo '<input type="submit" class="btn btn-table" name="update" value="Duyệt">';
+                                    echo '<input type="submit" class="btn_duyet btn-table" name="update" value="Duyệt">';
                                     echo '<input type="hidden" value="' . $row['id_cau_hoi'] . '" name="edit_ch">';
                                 } else {
-                                    echo '<input type="submit" class="btn btn-table" name="delete" value="Xóa">';
+                                    echo '<input type="submit" class="btn_xoa btn-table" name="delete" value="Xóa">';
                                     echo '<button class="btn btn-table"><a href="xem_truoc.php?id_khoa_hoc=' . $id_khoa_hoc . '&id_cau_hoi=' . $row['id_cau_hoi'] . '">Xem Trước</a></button>';
                                     echo '<input type="hidden" value="' . $row['id_cau_hoi'] . '" name="edit_ch">';
                                 }
@@ -202,7 +195,7 @@
                                     echo "<td>Đã duyệt</td>";
                                 }
                                 echo '<td><form action="" method="post">';
-                                echo '<button class="btn"><a href="xem_truoc.php?id_khoa_hoc=' . $id_khoa_hoc . '&id_cau_hoi=' . $row['id_cau_hoi'] . '">Xem Trước</a></button>';
+                                echo '<button class="btn btn-table"><a href="xem_truoc.php?id_khoa_hoc=' . $id_khoa_hoc . '&id_cau_hoi=' . $row['id_cau_hoi'] . '">Xem Trước</a></button>';
                                 echo '</form></td>';
                                 echo  '<td><img src="../images/quiz/' . $row['file_tai_len'] . '" width="200px" alt=""></td>';
                                 echo "</tr>";

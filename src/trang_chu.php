@@ -19,7 +19,7 @@
     <main>
         <div id="action">
             <h3>
-                <a href="../index.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+                <a href="khoa_hoc.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
                 Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
@@ -41,6 +41,7 @@
             </div>
             <div>
                 <?php
+                if(isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
                 // Truy vấn để lấy danh sách câu hỏi
                 $Stt = 1;
                 $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc AND trang_thai=1";
@@ -134,6 +135,8 @@
                     if (isset($_POST['dap_an'])) {
                         var_dump($_POST['dap_an']);
                     }
+                }} else {
+                    echo '<p>Không có bài kiểm tra nào.</p>';
                 }
                 ?>
             </div>

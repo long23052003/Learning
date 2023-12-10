@@ -1,44 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
 <nav class="navbar">
   <div class="navbar-list-brand">
     <div class="brand">
-      <?php
-          $path = $_SERVER['PHP_SELF'];
-          $hrefi = strpos($path, 'src') !== false ? '../' : '';
-          echo <<<EOD
-            <a class="navbar-brand-logo" href="{$hrefi}index.php">ELearning-K71</a>
+            <a class="navbar-brand-logo" href="khoa_hoc.php">ELearning-K71</a>
             <div class="brand-items">
-              <a class="" href="{$hrefi}index.php"><i class="fa fa-book" aria-hidden="true"></i> Khóa học</a>
+              <a class="" href="khoa_hoc.php"><i class="fa fa-book" aria-hidden="true"></i> Khóa học</a>
               <a href=""><i class="fa fa-server" aria-hidden="true"></i> Kỳ thi</a>
             </div>
-          EOD;
-        ?>
     </div>
     <div class="navbar-sub">
       <p class="navbar-toggler">
         <?php
         if (isLogin() == false) {
-          header('Location: ./src/dang_nhap.php');
-          exit;
+          header('Location: dang_nhap.php');
         } else {
-          echo '<img id="avt" src="'.(strpos($_SERVER['PHP_SELF'], 'src') !== false ? '../' : '').'images/'.$_SESSION['login']['img_avt'].'"/> '.$_SESSION['login']['username'];
+          echo '<img id="avt" src="../images/avt/'.$_SESSION['login']['img_avt'].'"/> '.$_SESSION['login']['username'];
         }
         ?>
         <i class="fa fa-sort-desc" aria-hidden="true"></i>
       </p>
       <div class="subnav-content">
-        <?php
-          $path = $_SERVER['PHP_SELF'];
-          //Chuyen huong toi index.php
-          $hrefi = strpos($path, 'src') !== false ? '../' : '';
-          //Chuyển hướng từ các tệp trong src
-          $hrefs = strpos($path, 'src') !== false ? '' : './src/';
-          echo <<<EOD
-            <a class="sub-item" href="{$hrefi}index.php">Khóa học của tôi</a>
-            <a class="sub-item" href="{$hrefs}trang_ca_nhan.php">Trang cá nhân</a>
-            <a class="sub-item" href="{$hrefs}doi_mk.php">Đổi mật khẩu</a>
-            <a class="logout sub-item" href="{$hrefs}dang_xuat.php">Đăng xuất</a>
-          EOD;
-        ?>
+            <?php if (isLogin() == true && $_SESSION['login']['role'] == 'admin' ) {
+              echo '<a class="sub-item" href="khoa_hoc.php">Quản lý khóa học</a>';
+              } else {
+                echo '<a class="sub-item" href="khoa_hoc.php">Khóa học của tôi</a>';
+              }
+               ?>
+            <a class="sub-item" href="trang_ca_nhan.php">Trang cá nhân</a>
+            <a class="sub-item" href="doi_mk.php">Đổi mật khẩu</a>
+            <a class="logout sub-item" href="dang_xuat.php">Đăng xuất</a>
       </div>
     </div>
   </div>

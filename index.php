@@ -1,51 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./css/general.css">
-    <link rel="stylesheet" href="./css/khoa_hoc.css">
-    <link rel="stylesheet" href="./css/footer.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
+<?php
+include '../function.php';
+if (isset($_POST['submitLogin'])) {
+    if (empty($_POST['username'])) {
+        echo '<div class="alert-warning" role="alert">Vui lòng nhập tên đăng nhập!</div>';
+    } else if (empty($_POST['password'])) {
+        echo '<div class="alert-warning" role="alert">Vui lòng nhập mật khẩu!</div>';
+    } else {
+        if (checkLogin($_POST['username'], $_POST['password'])) {
+            header('Location: khoa_hoc.php');
+        } else {
+            echo '<div class="alert-warning" role="alert">Tên đăng nhập hoặc mật khẩu không đúng!</div>';
         }
-
-        a {
-            text-decoration: none;
-        }
-
-        section {
-            margin-top: 70px;
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-        <?php
-        include './function.php';
-        include "./src/navbar.php";
-        ?>
-    </header>
-    <section>
-        <?php
-        if (isLogin()) {
-            include './src/khoa_hoc.php';
-        }
-        ?>
-    </section>
-
-</body>
-<footer>
-    <?php
-    include "./src/footer.php";
-    ?>
-</footer>
-
-</html>
+    }
+}
+ if(isLogin()){
+     header('Location: khoa_hoc.php');
+ }
+?>

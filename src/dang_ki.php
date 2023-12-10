@@ -47,7 +47,7 @@ unset($_SESSION['login']); ?>
                         $sql = "INSERT INTO user(username, password, role,img_avt,name,doB,id_khoa) VALUES('$username', '$password','user','$fileAvt','$name','$doB','$khoa')";
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
-                            header('Location: ./dang_nhap.php');
+                            echo '<div class="alert alert-success text-center" role="alert">Đăng kí thành công</div>';
                         } else {
                             echo '<div class="alert-warning" role="alert">Đăng kí thất bại!</div>';
                         }

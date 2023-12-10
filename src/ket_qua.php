@@ -19,7 +19,7 @@
     <main>
         <div id="action">
             <h3>
-                <a href="../index.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+                <a href="khoa_hoc.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
                 Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
@@ -38,6 +38,7 @@
             <div>
                 <?php
                 // Truy vấn để lấy danh sách câu hỏi
+                if(isset($_GET['id_khoa_hoc'])){
                 $cau_dung = 0;
                 $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc AND trang_thai=1";
                 $result = mysqli_query($conn, $query);
@@ -70,19 +71,26 @@
                                 if (isset($_POST['dap_an'][$item['id_cau_hoi']])) {
                                     $check = false;
                                     if (!is_array($_POST['dap_an'][$item['id_cau_hoi']])) {
-                                        // var_dump( $_POST['dap_an'][$item['id_cau_hoi']] == $item['dad']);
                                         $check =strcmp($_POST['dap_an'][$item['id_cau_hoi']],$item['dad']) ==0 ?true:false;
                                     } else {
                                         $check = false;
+                                        if (is_array($_POST['dap_an'][$item['id_cau_hoi']])) {
+                                            $check = true;
+                                        }
                                         foreach ($_POST['dap_an'][$item['id_cau_hoi']] as $index => $key) {
-                                            // Kiểm tra xem giá trị lưu có là số không, kết quả của câu nối là số (dưới 10), của câu nhiều đáp án là chữ hoặc số ( trên 10)
-                                            if (is_numeric($key)) {
-                                                if (strcmp($item['dad'][0][$key - 1],$list[$key - 1]['cau_hoi']) == 0) {
-                                                    $check = true;
+                                            if (isset($item['dad'][0][$key - 1])) {
+                                                $answerIndex = $key - 1;
+                                            
+                                                if (isset($list[$answerIndex]['cau_hoi'])) {
+                                                    $answerFromList = (string) $list[$answerIndex]['cau_hoi'];
+                                            
+                                                    if (strcmp($item['dad'][0][$answerIndex], $answerFromList) == 0) {
+                                                        $check = true;
+                                                    }
+                                                } else {
+                                                    // Handle the case when the indices are not set or out of bounds
+                                                    $check = false;
                                                 }
-                                            } else {
-                                                // Tìm kiếm giá trị của câu nhiều đáp án có trong mảng các đáp án đúng không
-                                                $check = in_array($key,$item['dad']);
                                             }
                                         }
                                     }
@@ -91,19 +99,25 @@
                             }
                         }
                     }
-                    $score = $cau_dung/$number_ques*100;
-                    echo <<<EOD
-                        <div class="kq-container">
-                            <div class="kq-content">
+                    if ($number_ques > 0) {
+                        $score = (floatval($cau_dung) / floatval($number_ques)) * 100;
+                    echo "
+                        <div class='kq-container'>
+                            <div class='kq-content'>
                                 <h1>{$score}</h1>
                                 <h3>Số câu đúng {$cau_dung}/{$number_ques}</h3>
                             </div>
                         </div>
-                    EOD;
+                    ";
+                    }
+                    else {
+                        echo '<p>Không có câu hỏi.</p>';
+                    }
                     
                 } else {
                     echo '<p>Lỗi hệ thống.</p>';
-                }
+                }}
+                  
                 ?>
             </div>
         </div>
