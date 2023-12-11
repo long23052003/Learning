@@ -38,70 +38,63 @@
             <div>
                 <?php
                 // Truy vấn để lấy danh sách câu hỏi
-                if(isset($_GET['id_khoa_hoc'])){
-                $cau_dung = 0;
-                $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc AND trang_thai=1";
-                $result = mysqli_query($conn, $query);
-                $number_ques = mysqli_num_rows($result);
-                // Kiểm tra xem có câu hỏi nào hay không
-                if ($number_ques > 0) {
-                    $dad = array();
-                    $list = array();
-                    // Lọc các loại câu để tạo danh sách đáp án đúng
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        if ($row['dang_cau_hoi'] === 'Điền' || $row['dang_cau_hoi'] === 'Trắc nghiệm') {
-                            array_push($dad, ['id_cau_hoi' => $row['id_cau_hoi'], 'dad' => $row['dap_an_dung']]);
-                        } else if ($row['dang_cau_hoi'] === 'Trắc nghiệm nhiều đáp án') {
-                            $answers = explode(",", $row['dap_an_dung']);
-                            array_push($dad, ['id_cau_hoi' => $row['id_cau_hoi'], 'dad' => $answers]);
-                        } else {
-                            $answers = explode(",", $row['dap_an_dung']);
-                            $answers = array_map(function ($answer) {
-                                $exp = explode("-", $answer);
-                                return ["cau_hoi" => $exp[0], "dap_an" => $exp[1]];
-                            }, $answers);
-                            $list = $answers;
-                            $questions = explode(",", $row['ten_cau_hoi']);
-                            array_push($dad, ['id_cau_hoi' => $row['id_cau_hoi'], 'dad' => [$questions, $answers]]);
+                if (isset($_GET['id_khoa_hoc'])) {
+                    $cau_dung = 0;
+                    $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc AND trang_thai=1";
+                    $result = mysqli_query($conn, $query);
+                    $number_ques = mysqli_num_rows($result);
+                    // Kiểm tra xem có câu hỏi nào hay không
+                    if ($number_ques > 0) {
+                        $dad = array();
+                        $list = array();
+                        // Lọc các loại câu để tạo danh sách đáp án đúng
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            if ($row['dang_cau_hoi'] === 'Điền' || $row['dang_cau_hoi'] === 'Trắc nghiệm') {
+                                array_push($dad, ['id_cau_hoi' => $row['id_cau_hoi'], 'dad' => $row['dap_an_dung']]);
+                            } else if ($row['dang_cau_hoi'] === 'Trắc nghiệm nhiều đáp án') {
+                                $answers = explode(",", $row['dap_an_dung']);
+                                array_push($dad, ['id_cau_hoi' => $row['id_cau_hoi'], 'dad' => $answers]);
+                            } else {
+                                $answers = explode(",", $row['dap_an_dung']);
+                                $answers = array_map(function ($answer) {
+                                    $exp = explode("-", $answer);
+                                    return ["cau_hoi" => $exp[0], "dap_an" => $exp[1]];
+                                }, $answers);
+                                $list = $answers;
+                                $questions = explode(",", $row['ten_cau_hoi']);
+                                array_push($dad, ['id_cau_hoi' => $row['id_cau_hoi'], 'dad' => [$questions, $answers]]);
+                            }
                         }
-                    }
-                    if (isset($_POST['btn_nop_bai'])) {
-                        if (isset($_POST['dap_an'])) {
-                            foreach ($dad as $item) {
-                                if (isset($_POST['dap_an'][$item['id_cau_hoi']])) {
-                                    $check = false;
-                                    if (!is_array($_POST['dap_an'][$item['id_cau_hoi']])) {
-                                        $check =strcmp($_POST['dap_an'][$item['id_cau_hoi']],$item['dad']) ==0 ?true:false;
-                                    } else {
+                        if (isset($_POST['btn_nop_bai'])) {
+                            if (isset($_POST['dap_an'])) {
+                                foreach ($dad as $item) {
+                                    if (isset($_POST['dap_an'][$item['id_cau_hoi']])) {
                                         $check = false;
-                                        if (is_array($_POST['dap_an'][$item['id_cau_hoi']])) {
-                                            $check = true;
-                                        }
-                                        foreach ($_POST['dap_an'][$item['id_cau_hoi']] as $index => $key) {
-                                            if (isset($item['dad'][0][$key - 1])) {
-                                                $answerIndex = $key - 1;
-                                            
-                                                if (isset($list[$answerIndex]['cau_hoi'])) {
-                                                    $answerFromList = (string) $list[$answerIndex]['cau_hoi'];
-                                            
-                                                    if (strcmp($item['dad'][0][$answerIndex], $answerFromList) == 0) {
+                                        if (!is_array($_POST['dap_an'][$item['id_cau_hoi']])) {
+                                            // var_dump( $_POST['dap_an'][$item['id_cau_hoi']] == $item['dad']);
+                                            $check = strcmp($_POST['dap_an'][$item['id_cau_hoi']], $item['dad']) == 0 ? true : false;
+                                        } else {
+                                            $check = false;
+                                            foreach ($_POST['dap_an'][$item['id_cau_hoi']] as $index => $key) {
+                                                // Kiểm tra xem giá trị lưu có là số không, kết quả của câu nối là số (dưới 10), của câu nhiều đáp án là chữ hoặc số ( trên 10)
+                                                if (is_numeric($key)) {
+                                                    if (isset($item['dad'][0][$key - 1], $list[$key - 1]['cau_hoi']) == 0) {
                                                         $check = true;
                                                     }
                                                 } else {
-                                                    // Handle the case when the indices are not set or out of bounds
-                                                    $check = false;
+                                                    // Tìm kiếm giá trị của câu nhiều đáp án có trong mảng các đáp án đúng không
+                                                    $check = in_array($key, $item['dad']);
                                                 }
                                             }
                                         }
+                                        $cau_dung += $check ? 1 : 0;
                                     }
-                                    $cau_dung += $check?1:0;
                                 }
                             }
                         }
-                    }
-                    if ($number_ques > 0) {
-                        $score = (floatval($cau_dung) / floatval($number_ques)) * 100;
-                    echo "
+                        if ($number_ques > 0) {
+                            $score = (floatval($cau_dung) / floatval($number_ques)) * 100;
+                            echo "
                         <div class='kq-container'>
                             <div class='kq-content'>
                                 <h1>{$score}</h1>
@@ -109,15 +102,14 @@
                             </div>
                         </div>
                     ";
+                        } else {
+                            echo '<p>Không có câu hỏi.</p>';
+                        }
+                    } else {
+                        echo '<p>Lỗi hệ thống.</p>';
                     }
-                    else {
-                        echo '<p>Không có câu hỏi.</p>';
-                    }
-                    
-                } else {
-                    echo '<p>Lỗi hệ thống.</p>';
-                }}
-                  
+                }
+
                 ?>
             </div>
         </div>
