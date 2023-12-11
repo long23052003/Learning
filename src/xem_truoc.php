@@ -110,12 +110,12 @@ include '../function.php';
                             } else {
                                 $correctAnswers =  explode(",", $row['dap_an_dung']);
                                 echo "<table>";
-                                echo <<<EOF
+                                echo '
                                     <tr>
                                         <th>Câu hỏi</th>
                                         <th>Đáp án</th>
                                     </tr>
-                                EOF;
+                                ';
                                 foreach ($correctAnswers as $kq) {
                                     $arr = explode("-", $kq);
                                     echo '<tr>';

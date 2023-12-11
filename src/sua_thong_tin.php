@@ -80,6 +80,7 @@ if (isset($_POST['btn'])) {
 
             if ($result) {
                 echo "<script>alert('Cập nhật thành công')</script>";
+                echo "<script>window.location.href = 'sua_thong_tin.php'</script>";
             } else {
                 echo "<script>alert('Cập nhật thất bại')</script>";
             }

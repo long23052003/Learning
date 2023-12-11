@@ -17,8 +17,11 @@
         if (isLogin() == false) {
           header('Location: dang_nhap.php');
         } else {
-          echo '<img id="avt" src="../images/avt/'.$_SESSION['login']['img_avt'].'"/> '.$_SESSION['login']['username'];
-        }
+          $sql="SELECT * FROM user WHERE username = '{$_SESSION['login']['username']}'";
+          $result = mysqli_query($conn, $sql);
+          $row = mysqli_fetch_assoc($result);
+          echo '<img id="avt" src="../images/avt/'.$row['img_avt'].'"/> '.$_SESSION['login']['username'];
+          }
         ?>
         <i class="fa fa-sort-desc" aria-hidden="true"></i>
       </p>
