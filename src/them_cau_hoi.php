@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm câu hỏi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/them_cau_hoi.css">
+
     <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/them_cau_hoi.css">
     <link rel="stylesheet" href="../css/footer.css">
 </head>
 
@@ -18,9 +19,9 @@
     ?>
     <main>
         <div id="action">
-            <h3>
-                <a href="./bien_tap.php?id_khoa_hoc=<?php echo isset($_GET['id_khoa_hoc']) ? ($_GET['id_khoa_hoc']) : '' ?>" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
-                Khóa học
+        <p class="h3">
+            <a href="./bien_tap.php?id_khoa_hoc=<?php echo isset($_GET['id_khoa_hoc']) ? ($_GET['id_khoa_hoc']) : '' ?>" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+            <span class="title_kh">Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc'])) {
                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -29,14 +30,14 @@
                     $row = mysqli_fetch_assoc($result);
                     echo $row['ten_khoa_hoc'];
                 }
-                ?>
-            </h3>
+                ?></span>
+            </p>
         </div>
         <div class="container">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name_quiz"><span style="color: red;">*</span>Nhập tên câu hỏi</label><br />
-                    <input class="form-control" type="text" name="ten_cau_hoi" id="" value="<?php echo isset($_POST['ten_cau_hoi']) ? ($_POST['ten_cau_hoi']) : '' ?>">
+                    <input class="form-control" type="text" name="ten_cau_hoi" id="" value="<?php echo (isset($_POST['ten_cau_hoi']) ? (htmlspecialchars($_POST['ten_cau_hoi'])) : '' )?>">
                 </div>
                 <div class="form-group">
                     <label for="name_quiz">Ảnh cho câu hỏi</label><br />
@@ -76,7 +77,7 @@
                             }
                         }
                     } else {
-                        echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại!</div>";
+                        echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại! Vui lòng truy cập khóa học.</div>";
                     }
                 }
                 ?>

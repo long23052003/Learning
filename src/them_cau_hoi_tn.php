@@ -19,8 +19,8 @@
     <main>
         <div id="action">
             <p class="h3">
-                <a href="bien_tap.php?id_khoa_hoc=<?php echo isset($_GET['id_khoa_hoc']) ? ($_GET['id_khoa_hoc']) : '' ?>" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
-                Khóa học
+            <a href="./bien_tap.php?id_khoa_hoc=<?php echo isset($_GET['id_khoa_hoc']) ? ($_GET['id_khoa_hoc']) : '' ?>" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+            <span class="title_kh">Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc'])) {
                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -29,14 +29,14 @@
                     $row = mysqli_fetch_assoc($result);
                     echo $row['ten_khoa_hoc'];
                 }
-                ?>
+                ?></span>
             </p>
         </div>
         <div class="container">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name_quiz"><span style="color: red;">*</span>Nhập tên câu hỏi</label>
-                    <input class="form-control" type="text" name="ten_cau_hoi" value="<?php echo isset($_POST['ten_cau_hoi']) ? ($_POST['ten_cau_hoi']) : ''; ?>">
+                    <input class="form-control" type="text" name="ten_cau_hoi" value="<?php echo isset($_POST['ten_cau_hoi']) ?(htmlspecialchars($_POST['ten_cau_hoi'])): ''; ?>">
                 </div>
                 <div class="form-group">
                     <label for="name_quiz">Dạng câu hỏi</label>
@@ -61,7 +61,7 @@
 
                         echo '<div class="ans">';
                         echo "<input class='form-check-input' name='dad' value='dad" . $i . "' type='radio'  >";
-                        echo "<input name='da[]' type='text'  class='form-control' aria-label='Text input with radio button' placeholder='Nhập đáp án' value='" . (isset($_POST['da'][$i]) ? $_POST['da'][$i] : '') . "'>";
+                        echo "<input name='da[]' type='text'  class='form-control' aria-label='Text input with radio button' placeholder='Nhập đáp án' value='" . (isset($_POST['da'][$i]) ? (htmlspecialchars($_POST['da'][$i])) : '') . "'>";
                         echo '</div>';
                     }
                     $_POST['da'] = isset($_POST['da']) ? $_POST['da'] : array();
@@ -101,11 +101,11 @@
                                 if (empty($_POST['dad'])) {
                                     echo "<div class='alert-warning' role='alert'>Bạn chưa chọn đáp án đúng</div>";
                                 } else {
-                                    $da = isset($_POST['da']) ? implode(',', $_POST['da']) : '';
+                                    $da = isset($_POST['da']) ? implode(';', $_POST['da']) : '';
                                     $tac_gia =  $_SESSION['login']['username'];
                                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
                                     $id_user = $_SESSION['login']['id'];
-                                    $ten_cau_hoi = $_POST['ten_cau_hoi'];
+                                    $ten_cau_hoi = ($_POST['ten_cau_hoi']);
                                     $dang_cau_hoi = $_POST['dang_cau_hoi'];
                                     if (isset($_FILES['file_tai_len'])) {
                                         $file_tai_len = $_FILES['file_tai_len']['name'];
@@ -124,7 +124,7 @@
                             }
                         }
                     } else {
-                        echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại</div>";
+                        echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại! Vui lòng truy cập khóa học.</div>";
                     }
                 }
                 ?>

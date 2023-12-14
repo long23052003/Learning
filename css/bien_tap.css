@@ -18,10 +18,6 @@ main {
     align-items: center;
 }
 
-.btn {
-    /* Style the button container */
-    border: none;
-}
 .btn_xoa {
     background-color: #ff0000;
     color: #fff;
@@ -30,6 +26,7 @@ main {
     padding: 5px;
     border: none;
     cursor: pointer;
+    font-weight: bold;
 }
 .btn_duyet {
     background-color: #009933;
@@ -40,18 +37,24 @@ main {
     border: none;
     cursor: pointer;
 }
-.btn a,
-.btn input[type="submit"] {
-    display: block;
-    background-color: #366d87;
+.btn {
+        background-color: #0373fc;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        padding: 5px;
+        border: none;
+        text-align: center;
+        font-weight: bold;
+        color: #fff;
+        cursor: pointer;
+} 
+.btn a {
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer; /* Add cursor style for better user experience */
 }
 .btn_back {
-    background-color: #366d87;
+    background-color: #0373fc;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -62,29 +65,31 @@ main {
     font-size: 16px;
 }
 .btn_back:hover {
-    background-color: #2a5570;
+    opacity: 0.8;
 
 }
 .btn a:hover {
-    background-color: #2a5570;
+    opacity: 0.8;
 }
 .btn_xoa:hover {
-    background-color: #cc0000;
+    opacity: 0.8;
 }
 .btn_duyet:hover {
-    background-color: #008000;
+    opacity: 0.8;
 }
 .dropdown-toggle {
     cursor: pointer;
     border: none;
     padding: 6px;
-    background-color: #366d87;
+    background-color: #0373fc;
     color: #fff;
     border-radius: 5px;
     margin-top: 15px;
     font-weight: bold;
 }
-
+.dropdown-toggle:hover {
+    opacity: 0.8;
+}
 .ques-menu {
     display: none;
     position: absolute;
@@ -135,4 +140,7 @@ th {
 .btn-table {
     margin: 5px;
     width: 100px;
+}
+.title_kh{
+    font-size: 20px;
 }

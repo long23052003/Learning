@@ -18,34 +18,32 @@
     ?>
     <main>
         <div id="action">
-            <h3>
-                <a href="khoa_hoc.php" class="btn_back"><i class="fa fa-chevron-left" aria-hidden="true"></i>Trở lại</a>
-                Khóa học
+        <p class="h3">
+            <a href="./khoa_hoc.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+            <span class="title_kh"><b>Khóa học
                 <?php
-                if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
+                if (isset($_GET['id_khoa_hoc'])) {
                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
                     $sql = "SELECT * FROM khoa_hoc WHERE id_khoa_hoc = $id_khoa_hoc";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
                     echo $row['ten_khoa_hoc'];
-                } else {
-                    echo "";
                 }
-                ?>
-            </h3>
-                    <div class="btn-top">
-                        <div class="sub-menu">
-                            <p class="dropdown-toggle" data-bs-toggle="dropdown">
-                                Thêm câu hỏi <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                            </p>
-                            <div class="ques-menu">
-                                <a class="dropdown-item" href="them_cau_hoi.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi điền</a>
-                                <a class="dropdown-item" href="them_cau_hoi_tn.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi trắc nghiệm 1 đáp án</a>
-                                <a class="dropdown-item" href="them_cau_noi.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi nối</a>
-                                <a class="dropdown-item" href="them_cau_nhieu_dap_an.php?id_khoa_hoc=<?php echo $id_khoa_hoc;?>">Câu hỏi với trắc nghiệm nhiều đáp án</a>
-                            </div>
-                        </div>
+                ?></b></span>
+            </p>
+            <div class="btn-top">
+                <div class="sub-menu">
+                    <p class="dropdown-toggle" data-bs-toggle="dropdown">
+                        Thêm câu hỏi <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    </p>
+                    <div class="ques-menu">
+                        <a class="dropdown-item" href="them_cau_hoi.php?id_khoa_hoc=<?php echo $id_khoa_hoc; ?>">Câu hỏi điền</a>
+                        <a class="dropdown-item" href="them_cau_hoi_tn.php?id_khoa_hoc=<?php echo $id_khoa_hoc; ?>">Câu hỏi trắc nghiệm 1 đáp án</a>
+                        <a class="dropdown-item" href="them_cau_noi.php?id_khoa_hoc=<?php echo $id_khoa_hoc; ?>">Câu hỏi nối</a>
+                        <a class="dropdown-item" href="them_cau_nhieu_dap_an.php?id_khoa_hoc=<?php echo $id_khoa_hoc; ?>">Câu hỏi với trắc nghiệm nhiều đáp án</a>
                     </div>
+                </div>
+            </div>
         </div>
         <?php ?>
         <div class="">
@@ -63,14 +61,25 @@
                                 echo "<div class='alert-danger' role='alert'style='width:100%;'>Duyệt câu hỏi thất bại</div>";
                             }
                         }
+
                         if (isset($_POST['delete'])) {
                             $id_cau_hoi = $_POST['edit_ch'];
-                            $sql = "DELETE FROM cau_hoi WHERE id_cau_hoi = $id_cau_hoi";
-                            $result = mysqli_query($conn, $sql);
-                            if ($result) {
-                                echo "<div class='alert-success' role='alert'style='width:100%;'>Xóa câu hỏi thành công</div>";
+                            $sql_delete_dap_an = "DELETE FROM dap_an WHERE id_cau_hoi = $id_cau_hoi";
+                            $result_delete_dap_an = mysqli_query($conn, $sql_delete_dap_an);
+
+                            // Check if deletion from dap_an was successful
+                            if ($result_delete_dap_an) {
+                                // Now, you can safely delete the row from cau_hoi table
+                                $sql_delete_cau_hoi = "DELETE FROM cau_hoi WHERE id_cau_hoi = $id_cau_hoi";
+                                $result_delete_cau_hoi = mysqli_query($conn, $sql_delete_cau_hoi);
+
+                                if ($result_delete_cau_hoi) {
+                                    echo "<div class='alert-success' role='alert' style='width:100%;'>Xóa câu hỏi thành công</div>";
+                                } else {
+                                    echo "<div class='alert-danger' role='alert' style='width:100%;'>Xóa câu hỏi thất bại</div>";
+                                }
                             } else {
-                                echo "<div class='alert-danger' role='alert'style='width:100%;'>Xóa câu hỏi thất bại</div>";
+                                echo "<div class='alert-danger' role='alert' style='width:100%;'>Xóa câu hỏi thất bại</div>";
                             }
                         }
                         //admin
@@ -91,20 +100,20 @@
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
                                 echo "<td>{$stt}</td>";
-                                $questions = explode(",", $row['ten_cau_hoi']);
+                                $questions = explode(";", ($row['ten_cau_hoi']));
                                 echo "<td>";
                                 echo "<ul>";
                                 foreach ($questions as $question) {
-                                    echo "<li>$question</li>";
+                                    echo "<li>".htmlspecialchars($question)."</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
                                 echo "<td>{$row['dang_cau_hoi']}</td>";
                                 echo "<td>";
-                                $answers = explode(",", $row['dap_an']);
+                                $answers = explode(";", ($row['dap_an']));
                                 echo "<ul>";
                                 foreach ($answers as $answer) {
-                                    echo "<li>$answer</li>";
+                                    echo "<li>".htmlspecialchars($answer)."</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
@@ -172,20 +181,20 @@
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
                                 echo "<td>{$stt}</td>";
-                                $questions = explode(",", $row['ten_cau_hoi']);
+                                $questions = explode(";", ($row['ten_cau_hoi']));
                                 echo "<td>";
                                 echo "<ul>";
                                 foreach ($questions as $question) {
-                                    echo "<li>$question</li>";
+                                    echo "<li>".htmlspecialchars($question)."</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
                                 echo "<td>{$row['dang_cau_hoi']}</td>";
                                 echo "<td>";
                                 echo "<ul>";
-                                $answers = explode(",", $row['dap_an']);
+                                $answers = explode(";", ($row['dap_an']));
                                 foreach ($answers as $answer) {
-                                    echo "<li>$answer</li>";
+                                    echo "<li>".htmlspecialchars($answer)."</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";

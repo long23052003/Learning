@@ -30,6 +30,7 @@
               echo '<a class="sub-item" href="khoa_hoc.php">Quản lý khóa học</a>';
               } else {
                 echo '<a class="sub-item" href="khoa_hoc.php">Khóa học của tôi</a>';
+                echo '<a class="sub-item" href="lich_su.php">Lịch sử học</a>';
               }
                ?>
             <a class="sub-item" href="trang_ca_nhan.php">Trang cá nhân</a>

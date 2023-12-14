@@ -20,7 +20,7 @@
         <div id="action" >
             <p class="h3">
                 <a href="bien_tap.php?id_khoa_hoc=<?php echo isset($_GET['id_khoa_hoc']) ? ($_GET['id_khoa_hoc']) : '' ?>" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
-                Khóa học
+                <span class="title_kh">Khóa học
                 <?php
                 if (isset($_GET['id_khoa_hoc'])) {
                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -29,7 +29,7 @@
                     $row = mysqli_fetch_assoc($result);
                     echo $row['ten_khoa_hoc'];
                 }
-                ?>
+                ?></span>
             </p>
         </div>
         <div class="container">
@@ -99,12 +99,13 @@
                                             for($j = 0; $j < sizeof($_POST['dad']); $j++){
                                                 if($_POST['dad'][$j] == 'dad' . $i){
                                                     $_POST['da'][$i] .= "(Đúng)";
-                                                    $dap_an_dung = $dap_an_dung.str_replace("(Đúng)", ",", $_POST['da'][$i]);
+                                                    $dap_an_dung = $dap_an_dung.str_replace("(Đúng)", ";", $_POST['da'][$i]);
                                                 }
                                             }
                                         }
                                     }
-                                    $dap_an = isset($_POST['da']) ? implode(',', $_POST['da']) : '';
+                                    $dap_an_dung = rtrim($dap_an_dung, ';');
+                                    $dap_an = isset($_POST['da']) ? implode(';', $_POST['da']) : '';
                                     $tac_gia =  $_SESSION['login']['username'];
                                     $id_khoa_hoc = $_GET['id_khoa_hoc'];
                                     $id_user = $_SESSION['login']['id'];
@@ -125,7 +126,7 @@
                             }
                         }
                     } else {
-                        echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại</div>";
+                        echo "<div class='alert-warning' role='alert'>Thêm câu hỏi thất bại! Vui lòng truy cập khóa học.</div>";
                     }
                 }
                 ?>

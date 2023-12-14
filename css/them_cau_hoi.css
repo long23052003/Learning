@@ -1,3 +1,13 @@
+main {
+    padding: 3% 15%;
+    min-height: 72.3vh;
+    background: url('images/images.jpg');
+}
+
+.title_kh{
+    font-size: 20px;
+    font-weight: bold;
+}
 .container {
     display: flex;
     justify-content: center;
@@ -16,15 +26,18 @@ form {
 }
 
 .btn {
-    background-color: #366d87;
+    background-color: #0373fc;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     padding: 5px;
     border: none;
     text-align: center;
+    font-weight: bold;
   }
-
+.btn:hover {
+    opacity: 0.8;
+}
 form div {
     width: 100%;
     margin-top: 10px;

@@ -70,6 +70,7 @@ main {
   width: 150px;
   min-height: 55px;
   margin: 0 -10px;
+  
 }
 
 .navbar-toggler:hover {
@@ -92,6 +93,7 @@ main {
 .navbar-sub:hover .subnav-content {
   display: flex;
   flex-direction: column;
+  transition: 2s;
 }
 
 .subnav-content a {

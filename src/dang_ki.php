@@ -83,17 +83,6 @@ unset($_SESSION['login']); ?>
                 Ngày sinh</label>
             <input type="date" id="inputPassword" placeholder="" name="doB">
         </div>
-        <div class="form-input">
-            <label for="">
-                Khoa</label>
-            <select class="form-select" aria-label="Default select example" name="khoa">
-                <option value="" <?php echo empty($_POST['khoa']) ? 'selected' : ''; ?>>Chọn khoa</option>
-                <option value="1" <?php echo isset($_POST['khoa']) && $_POST['khoa'] == '1' ? 'selected' : ''; ?>>Công nghệ thông tin</option>
-                <option value="2" <?php echo isset($_POST['khoa']) && $_POST['khoa'] == '2' ? 'selected' : ''; ?>>Văn</option>
-                <option value="3" <?php echo isset($_POST['khoa']) && $_POST['khoa'] == '3' ? 'selected' : ''; ?>>Hóa</option>
-            </select>
-
-        </div>
         <div class="input-img">
             <label for="btn-img" id="img-label">Ảnh đại diện</label>
             <input type="file" placeholder="Recipient's username" id="btn-img" accept="image/png, image/jpeg" name='file_img' hidden onchange="displayFileName(this)">
