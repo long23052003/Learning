@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Trang chủ trả lời câu hỏi</title>
+        <title>Luyện tập</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/trang_chu.css">
@@ -37,12 +37,14 @@
             <div class="trang_chu">
                 <div>
                     <?php
-                    $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = $id_khoa_hoc AND trang_thai=1 and id_user != {$_SESSION['login']['id']} ORDER BY RAND() LIMIT 10";
-                    $result = mysqli_query($conn, $query);
-                    // Kiểm tra xem có câu hỏi nào hay không
-                    if (mysqli_num_rows($result) > 0) {
-                        echo '<div id="showtime"></div>
+                    if (isset($_GET['id_khoa_hoc'])) {
+                        $query = "SELECT * FROM cau_hoi WHERE id_khoa_hoc = {$_GET['id_khoa_hoc']} AND trang_thai=1 and id_user != {$_SESSION['login']['id']} ORDER BY RAND() LIMIT 10";
+                        $result = mysqli_query($conn, $query);
+                        // Kiểm tra xem có câu hỏi nào hay không
+                        if (mysqli_num_rows($result) > 0) {
+                            echo '<div id="showtime"></div>
                                 <div id="clear-float"></div>';
+                        }
                     }
                     ?>
                 </div>

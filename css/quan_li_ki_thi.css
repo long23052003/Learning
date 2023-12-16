@@ -1,0 +1,93 @@
+table {
+    width: 100%;
+    margin-top: 10px;
+}
+
+table,
+tr,
+th,
+td {
+    border-collapse: collapse;
+    border: 1px solid #366d87;
+    padding: 10px;
+}
+
+th {
+    color: #366d87;
+}
+
+.table form {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.btn-table {
+    margin: 5px;
+    width: 100px;
+}
+.title_kh {
+    font-size: 20px;
+}
+
+.answers {
+    margin-bottom: 20px;
+}
+
+.da {
+    margin-bottom: 10px;
+}
+
+/* Additional styles for images inside questions */
+img.img-fluid {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+form select,
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    background-color: #0373fc;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0452bf;
+}
+.btn {
+    background-color: #0373fc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    font-weight: normal;
+}
+.btn:hover {
+    opacity: 0.8;
+    background-color: #0373fc;
+}

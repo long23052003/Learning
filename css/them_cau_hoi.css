@@ -34,7 +34,9 @@ form {
     border: none;
     text-align: center;
     font-weight: bold;
+    
   }
+
 .btn:hover {
     opacity: 0.8;
 }
