@@ -18,18 +18,19 @@
     ?>
     <main>
         <div id="action">
-        <p class="h3">
-            <a href="./khoa_hoc.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
-            <span class="title_kh"><b>Khóa học
-                <?php
-                if (isset($_GET['id_khoa_hoc'])) {
-                    $id_khoa_hoc = $_GET['id_khoa_hoc'];
-                    $sql = "SELECT * FROM khoa_hoc WHERE id_khoa_hoc = $id_khoa_hoc";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    echo $row['ten_khoa_hoc'];
-                }
-                ?></b></span>
+            <p class="h3">
+
+                <a href="./khoa_hoc.php" class="btn"><i class="fa fa-chevron-left" aria-hidden="true"></i> Trở lại</a>
+                <span class="title_kh"><b>Khóa học
+                        <?php
+                        if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '') {
+                            $id_khoa_hoc = $_GET['id_khoa_hoc'];
+                            $sql = "SELECT * FROM khoa_hoc WHERE id_khoa_hoc = $id_khoa_hoc";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            echo $row['ten_khoa_hoc'];
+                        }
+                        ?></b></span>
             </p>
             <div class="btn-top">
                 <div class="sub-menu">
@@ -64,20 +65,16 @@
 
                         if (isset($_POST['delete'])) {
                             $id_cau_hoi = $_POST['edit_ch'];
-                            $sql_delete_dap_an = "DELETE FROM dap_an WHERE id_cau_hoi = $id_cau_hoi";
-                            $result_delete_dap_an = mysqli_query($conn, $sql_delete_dap_an);
+                            $sql_delete_cau_hoi = "DELETE FROM cau_hoi WHERE id_cau_hoi = $id_cau_hoi";
+                            $result_delete_cau_hoi = mysqli_query($conn, $sql_delete_cau_hoi);
 
                             // Check if deletion from dap_an was successful
-                            if ($result_delete_dap_an) {
-                                // Now, you can safely delete the row from cau_hoi table
-                                $sql_delete_cau_hoi = "DELETE FROM cau_hoi WHERE id_cau_hoi = $id_cau_hoi";
-                                $result_delete_cau_hoi = mysqli_query($conn, $sql_delete_cau_hoi);
 
-                                if ($result_delete_cau_hoi) {
-                                    echo "<div class='alert-success' role='alert' style='width:100%;'>Xóa câu hỏi thành công</div>";
-                                } else {
-                                    echo "<div class='alert-danger' role='alert' style='width:100%;'>Xóa câu hỏi thất bại</div>";
-                                }
+                            // Now, you can safely delete the row from cau_hoi table
+
+
+                            if ($result_delete_cau_hoi) {
+                                echo "<div class='alert-success' role='alert' style='width:100%;'>Xóa câu hỏi thành công</div>";
                             } else {
                                 echo "<div class='alert-danger' role='alert' style='width:100%;'>Xóa câu hỏi thất bại</div>";
                             }
@@ -91,6 +88,7 @@
                         <th>Tác giả</th>
                         <th>Trạng thái</th>
                         <th>Ảnh</th>
+                        <th>Thời gian thêm</th>
                         <th>Thao tác</th>";
                         $stt = 1;
                         $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -104,7 +102,7 @@
                                 echo "<td>";
                                 echo "<ul>";
                                 foreach ($questions as $question) {
-                                    echo "<li>".htmlspecialchars($question)."</li>";
+                                    echo "<li>" . htmlspecialchars($question) . "</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
@@ -113,7 +111,7 @@
                                 $answers = explode(";", ($row['dap_an']));
                                 echo "<ul>";
                                 foreach ($answers as $answer) {
-                                    echo "<li>".htmlspecialchars($answer)."</li>";
+                                    echo "<li>" . htmlspecialchars($answer) . "</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
@@ -124,6 +122,7 @@
                                     echo "<td>Đã Duyệt</td>";
                                 };
                                 echo  '<td><img width="200px" src="../images/quiz/' . $row['file_tai_len'] . '" alt=""></td>';
+                                echo '<td>' . $row['time_add'] . '</td>';
                                 echo '<td>
                             <form action="" method="post">';
                                 if ($row['trang_thai'] == 0) {
@@ -143,7 +142,7 @@
                             }
                         } else {
                             echo "<tr>";
-                            echo "<td align='center' colspan='7'>Không có câu hỏi nào</td>";
+                            echo "<td align='center' colspan='8'>Không có câu hỏi nào</td>";
                             echo "</tr>";
                         }
                     } else {
@@ -155,9 +154,10 @@
                         <th>Tác giả</th>
                         <th>Trạng thái</th>
                         <th>Ảnh</th>
+                        <th>Thời gian thêm</th>
                         <th>Thao tác</th>";
                         echo "<tr>";
-                        echo "<td align='center' colspan='7'>Không có câu hỏi nào</td>";
+                        echo "<td align='center' colspan='8'>Không có câu hỏi nào</td>";
                         echo "</tr>";
                     }
                 }
@@ -172,7 +172,8 @@
                         <th>Đáp án</th>
                         <th>Tác giả</th>
                         <th>Trạng thái</th>
-                        <th>Ảnh</th>";
+                        <th>Ảnh</th>
+                        <th>Thời gian thêm</th>";
                         $stt = 1;
                         $id_khoa_hoc = $_GET['id_khoa_hoc'];
                         $sql = "SELECT cau_hoi.* FROM cau_hoi JOIN user ON cau_hoi.id_user = user.id_user WHERE cau_hoi.id_khoa_hoc = $id_khoa_hoc AND cau_hoi.id_user = $id_user";
@@ -185,7 +186,7 @@
                                 echo "<td>";
                                 echo "<ul>";
                                 foreach ($questions as $question) {
-                                    echo "<li>".htmlspecialchars($question)."</li>";
+                                    echo "<li>" . htmlspecialchars($question) . "</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
@@ -194,7 +195,7 @@
                                 echo "<ul>";
                                 $answers = explode(";", ($row['dap_an']));
                                 foreach ($answers as $answer) {
-                                    echo "<li>".htmlspecialchars($answer)."</li>";
+                                    echo "<li>" . htmlspecialchars($answer) . "</li>";
                                 }
                                 echo "</ul>";
                                 echo "</td>";
@@ -207,12 +208,13 @@
                                 echo '<button class="btn btn-table"><a href="xem_truoc.php?id_khoa_hoc=' . $id_khoa_hoc . '&id_cau_hoi=' . $row['id_cau_hoi'] . '">Xem Trước</a></button>';
                                 echo '</form></td>';
                                 echo  '<td><img src="../images/quiz/' . $row['file_tai_len'] . '" width="200px" alt=""></td>';
+                                echo '<td>' . $row['time_add'] . '</td>';
                                 echo "</tr>";
                                 $stt++;
                             }
                         } else {
                             echo "<tr>";
-                            echo "<td align='center' colspan='7'>Không có câu hỏi nào</td>";
+                            echo "<td align='center' colspan='8'>Không có câu hỏi nào</td>";
                             echo "</tr>";
                         }
                     } else {
@@ -223,9 +225,11 @@
                         <th>Đáp án</th>
                         <th>Tác giả</th>
                         <th>Trạng thái</th>
-                        <th>Ảnh</th>";
+                        <th>Ảnh</th>
+                        <th>Thời gian thêm</th>";
+                        
                         echo "<tr>";
-                        echo "<td align='center' colspan='7'>Không có câu hỏi nào</td>";
+                        echo "<td align='center' colspan='8'>Không có câu hỏi nào</td>";
                         echo "</tr>";
                     }
                 }

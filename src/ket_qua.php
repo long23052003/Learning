@@ -45,7 +45,7 @@
                     <div class='kq-content'>
                         <h2>Chúc mừng bạn đã hoàn thành bài kiểm tra</h2>
                         <h1>Điểm của bạn: {$row_diem['diem']}</h1>
-                        <h3>Thời gian hoàn thành: {$row_diem['time']}</h3>
+                        <h3>Thời gian làm bài: {$row_diem['duration']}</h3>
                         <br>
                         <a href='./trang_chu.php?id_khoa_hoc=$id_khoa_hoc' class='btn'> Tiếp tục luyện tập</a>'
                     </div>

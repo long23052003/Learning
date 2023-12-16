@@ -27,7 +27,7 @@ function checkLogin($username, $password)
     } else {
         $row = mysqli_fetch_assoc($query);
         if ($row) {
-            $_SESSION['login'] = ['username' => $username, 'id' => $row['id_user'], 'isLogin' => true,'role'=>$row['role'], 'img_avt'=>$row['img_avt'] ];
+            $_SESSION['login'] = ['username' => $username, 'id' => $row['id_user'], 'isLogin' => true,'role'=>$row['role'], 'img_avt'=>$row['img_avt'] ,'lan_thi'=>0];
             return true;
         } else {
             return false;

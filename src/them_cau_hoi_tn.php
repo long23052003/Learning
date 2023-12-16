@@ -83,7 +83,6 @@
                     if (isset($_GET['id_khoa_hoc'])) {
                         if (empty($_POST['ten_cau_hoi'])) {
                             echo "<div class='alert-warning' role='alert'>Vui lòng nhập tên câu hỏi</div>";
-                            var_dump($_FILES['file_tai_len']['name']);
                         } else if ($_POST['num_choices'] < 2 || $_POST['num_choices'] > 10) {
                             echo "<div class='alert-warning' role='alert'>Vui lòng nhập số lượng đáp án và bấm vào nút tạo</div>";
                         } else {
@@ -112,7 +111,7 @@
                                         $tmp_name = $_FILES['file_tai_len']['tmp_name'];
                                         $path = "../images/quiz/" . $file_tai_len;
                                         move_uploaded_file($tmp_name, $path);
-                                        $sql = "INSERT INTO `cau_hoi`(`ten_cau_hoi`, `dang_cau_hoi`, `dap_an`, `file_tai_len`,`id_khoa_hoc`,`trang_thai`,`id_user`,`dap_an_dung`) VALUES ('$ten_cau_hoi','$dang_cau_hoi','$da','$file_tai_len','$id_khoa_hoc',0,'$id_user','$dap_an_dung')";
+                                        $sql = "INSERT INTO `cau_hoi`(`ten_cau_hoi`, `dang_cau_hoi`, `dap_an`, `file_tai_len`,`id_khoa_hoc`,`trang_thai`,`id_user`,`so_luong_dap_an`,`dap_an_dung`,`time_add`) VALUES ('$ten_cau_hoi','$dang_cau_hoi','$da','$file_tai_len','$id_khoa_hoc',0,'$id_user','$num_choices','$dap_an_dung',CURRENT_TIMESTAMP)";
                                         $query = mysqli_query($conn, $sql);
                                     }
                                     if ($query) {

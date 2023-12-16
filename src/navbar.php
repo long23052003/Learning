@@ -8,7 +8,7 @@
             <a class="navbar-brand-logo" href="khoa_hoc.php">ELearning-K71</a>
             <div class="brand-items">
               <a class="" href="khoa_hoc.php"><i class="fa fa-book" aria-hidden="true"></i> Khóa học</a>
-              <a href=""><i class="fa fa-server" aria-hidden="true"></i> Kỳ thi</a>
+              <a href="quan_li_ki_thi.php"><i class="fa fa-server" aria-hidden="true"></i> Kỳ thi</a>
             </div>
     </div>
     <div class="navbar-sub">

@@ -115,7 +115,7 @@
                                     $tmp_name = $_FILES['file_tai_len']['tmp_name'];
                                     $path = "../images/quiz/" . $file_tai_len;
                                     move_uploaded_file($tmp_name, $path);
-                                    $sql = "INSERT INTO `cau_hoi`(`ten_cau_hoi`, `dang_cau_hoi`, `dap_an`, `file_tai_len`,`id_khoa_hoc`,`trang_thai`,`id_user`,`so_luong_dap_an`,`dap_an_dung`) VALUES ('$ten_cau_hoi','$dang_cau_hoi','$dap_an','$file_tai_len','$id_khoa_hoc',0,'$id_user','$num_choices','$dap_an_dung')";
+                                    $sql = "INSERT INTO `cau_hoi`(`ten_cau_hoi`, `dang_cau_hoi`, `dap_an`, `file_tai_len`,`id_khoa_hoc`,`trang_thai`,`id_user`,`so_luong_dap_an`,`dap_an_dung`,`time_add`) VALUES ('$ten_cau_hoi','$dang_cau_hoi','$dap_an','$file_tai_len','$id_khoa_hoc',0,'$id_user','$num_choices','$dap_an_dung',CURRENT_TIMESTAMP)";
                                     $query = mysqli_query($conn, $sql);
                                     if ($query) {
                                         echo "<div class='alert-success' role='alert'>Thêm câu hỏi thành công</div>";

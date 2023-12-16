@@ -32,7 +32,8 @@
                         <th>STT</th>
                         <th>Tên khóa học</th>
                         <th>Điểm</th>
-                        <th>Thời gian tham gia</th>";
+                        <th>Ngay tham gia</th>
+                        <th>thoi gian lam bai</th>";
                     $stt = 1;
                     $id_user = $_SESSION['login']['id'];
                     $sql = "SELECT diem_user .*, khoa_hoc.ten_khoa_hoc FROM diem_user JOIN khoa_hoc ON diem_user.id_khoa_hoc = khoa_hoc.id_khoa_hoc WHERE id_user = $id_user ORDER BY id_diem";
@@ -44,12 +45,13 @@
                             echo "<td>" . $row['ten_khoa_hoc'] . "</td>";
                             echo "<td>" . $row['diem'] . "</td>";
                             echo "<td>" . $row['time'] . "</td>";
+                            echo "<td>" . $row['duration'] . "</td>";
                             echo "</tr>";
                             $stt++;
                         }
                     } else {
                         echo "<tr>";
-                        echo "<td colspan='4'>Bạn chưa tham gia học</td>";
+                        echo "<td colspan='4' align='center'>Bạn chưa tham gia học</td>";
                         echo "</tr>";
                     }
                 } else {
@@ -80,7 +82,7 @@
                         }
                     } else {
                         echo "<tr>";
-                        echo "<td colspan='4'>Chưa có dữ liệu người dùng</td>";
+                        echo "<td colspan='6' align='center'>Chưa có dữ liệu người dùng</td>";
                         echo "</tr>";
                     }
                 } else {
