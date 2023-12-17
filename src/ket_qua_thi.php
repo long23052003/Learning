@@ -28,7 +28,7 @@
                     $sql = "SELECT * FROM ki_thi WHERE id_ki_thi = $id_ki_thi";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                    $gioi_han = $row['gioi_han'];
+                    $gioi_han =  $row['gioi_han'];
                     echo $row['ten_ki_thi'];
                 }
                 ?></b></span>
@@ -38,21 +38,27 @@
             <div>
                 <?php
                 if($_SESSION['login']['role'] === 'user') {
-                if (isset($_GET['id_khoa_hoc'])) {
+                if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '' && isset($_GET['id_ki_thi']) && $_GET['id_ki_thi'] != '') {
                     $id_user = $_SESSION['login']['id'];
-                    $sql_diem = "SELECT * FROM diem_user JOIN user ON user.id_user = diem_user.id_user WHERE id_khoa_hoc = $id_khoa_hoc AND diem_user.id_user = $id_user ORDER BY diem_user.id_diem DESC LIMIT 1";
-                    $sql_dem_diem="SELECT * FROM diem_user WHERE id_khoa_hoc = $id_khoa_hoc AND diem_user.id_user = $id_user";
+                    $sql_diem = "SELECT * FROM diem_user JOIN user ON user.id_user = diem_user.id_user WHERE id_khoa_hoc = $id_khoa_hoc AND diem_user.id_user = $id_user AND diem_user.id_ki_thi = $id_ki_thi ORDER BY diem_user.id_diem DESC LIMIT 1";
+                    $sql_dem_diem="SELECT COUNT(*) FROM diem_user WHERE id_khoa_hoc = $id_khoa_hoc AND diem_user.id_user = $id_user AND diem_user.id_ki_thi = $id_ki_thi";
                     $result_dem_diem = mysqli_query($conn, $sql_dem_diem);
                     $result_diem = mysqli_query($conn, $sql_diem);
                     $row_diem = mysqli_fetch_assoc($result_diem);
-                    $count = mysqli_num_rows($result_dem_diem);
+                    $row_dem_user = mysqli_fetch_assoc($result_dem_diem);
+                    $count = $row_dem_user['COUNT(*)'];
                     echo " <div class='kq-container'>
                     <div class='kq-content'>
                         <h2>Chúc mừng bạn đã hoàn thành bài kiểm tra</h2>
                         <h1>Điểm của bạn: {$row_diem['diem']}</h1>
-                        <h3>Thời gian làm bài: {$row_diem['duration']}</h3>
-                        <h3>Số lần làm bài: {$count}/{$gioi_han}</h3>
-                        <br>
+                        <h3>Thời gian làm bài: {$row_diem['duration']}</h3>";
+                       if($gioi_han!=0){
+                        echo " <h3>Số lần làm bài: {$count}/{$gioi_han}</h3>";
+                       }
+                       else {
+                        echo " <h3>Số lần làm bài: {$count}</h3>";
+                       }
+                    echo "   <br>
                     </div>
                    
                 </div>";

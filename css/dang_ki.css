@@ -132,3 +132,12 @@ select {
     cursor: pointer;
     width: 100%;
 }
+.btn-login{
+    border: none;
+    
+}
+a{
+    color: orangered;
+    text-decoration: none;
+    font-weight: bold;
+}

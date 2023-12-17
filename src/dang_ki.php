@@ -32,7 +32,6 @@ unset($_SESSION['login']); ?>
                     move_uploaded_file($fileNameAvt, $path);
                     $doB = $_POST['doB'];
                     $name = $_POST['name'];
-                    $khoa = $_POST['khoa'];
                     $username = $_POST['username'];
                     $password = $_POST['password'];
                     $password2 = $_POST['password2'];
@@ -44,7 +43,7 @@ unset($_SESSION['login']); ?>
                     if ($userCount > 0) {
                         echo '<div class="alert-warning" role="alert">Tên người dùng đã tồn tại!</div>';
                     } else {
-                        $sql = "INSERT INTO user(username, password, role,img_avt,name,doB,id_khoa) VALUES('$username', '$password','user','$fileAvt','$name','$doB','$khoa')";
+                        $sql = "INSERT INTO user(username, password, role,img_avt,name,doB,id_khoa) VALUES('$username', '$password','user','$fileAvt','$name','$doB',1)";
                         $query = mysqli_query($conn, $sql);
                         if ($query) {
                             echo '<div class="alert alert-success text-center" role="alert">Đăng kí thành công</div>';

@@ -188,7 +188,7 @@
                                                 } else if ($row_question['dang_cau_hoi'] === 'Trắc nghiệm nhiều đáp án') {
                                                     $answers = isset($user_answer) ? (is_array($user_answer) ? $user_answer : array($user_answer)) : array();
                                                     $answers_check = isset($row_question['dap_an_dung']) ? explode(";", ($row_question['dap_an_dung'])) : array();
-                                                    if (array_diff($answers, $answers_check) == null) {
+                                                    if (empty(array_diff($answers_check, $answers)) && empty(array_diff($answers, $answers_check))) {
                                                         $cau_dung++;
                                                     } else {
                                                         $cau_dung += 0;

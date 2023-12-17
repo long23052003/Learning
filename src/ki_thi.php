@@ -1,12 +1,13 @@
 <?php include '../function.php';
 if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '' && isset($_GET['id_ki_thi']) && $_GET['id_ki_thi'] != '' && $_SESSION['login']['role'] == 'user') {
-    $sql_check_gh = "SELECT diem_user.*, ki_thi.gioi_han FROM diem_user JOIN ki_thi ON diem_user.id_ki_thi=ki_thi.id_ki_thi WHERE diem_user.id_user = {$_SESSION['login']['id']} AND diem_user.id_khoa_hoc ={$_GET['id_khoa_hoc']}";
+    $sql_check_gh = "SELECT COUNT(*) FROM diem_user WHERE id_user = {$_SESSION['login']['id']} AND id_khoa_hoc ={$_GET['id_khoa_hoc']} AND id_ki_thi = {$_GET['id_ki_thi']}";
     $result_check_gh = mysqli_query($conn, $sql_check_gh);
-    $sql_gh= "SELECT * FROM ki_thi WHERE id_ki_thi = {$_GET['id_ki_thi']}";
+    $row_check_gh = mysqli_fetch_assoc($result_check_gh);
+    $sql_gh= "SELECT * FROM ki_thi WHERE id_ki_thi = {$_GET['id_ki_thi']} AND id_khoa_hoc = {$_GET['id_khoa_hoc']}";
     $result_gh = mysqli_query($conn, $sql_gh);
-    $row_check_gh = mysqli_fetch_assoc($result_gh);
-    $gh=$row_check_gh['gioi_han'];
-    if (mysqli_num_rows($result_check_gh) >= $gh) {
+    $row_gh = mysqli_fetch_assoc($result_gh);
+
+    if ( $row_check_gh['COUNT(*)'] >= $row_gh['gioi_han'] && $row_gh['gioi_han']!=0) {
         echo "<script type='text/javascript'>alert('Bạn đã vượt quá số lần thi cho phép')
      ;
      window.location.href='quan_li_ki_thi.php';
@@ -42,6 +43,7 @@ if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '' && isset($_GET['id
             <p class="h3">
                 <span class="title_kh"><b>
                         <?php
+                        
                          if (isset($_GET['id_ki_thi'])) {
                             $id_ki_thi = $_GET['id_ki_thi'];
                             $id_khoa_hoc = $_GET['id_khoa_hoc'];
@@ -218,7 +220,7 @@ if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '' && isset($_GET['id
                                             } else if ($row_question['dang_cau_hoi'] === 'Trắc nghiệm nhiều đáp án') {
                                                 $answers = isset($user_answer) ? (is_array($user_answer) ? $user_answer : array($user_answer)) : array();
                                                 $answers_check = isset($row_question['dap_an_dung']) ? explode(";", ($row_question['dap_an_dung'])) : array();
-                                                if (array_diff($answers, $answers_check) == null) {
+                                                if (empty(array_diff($answers_check, $answers)) && empty(array_diff($answers, $answers_check))) {
                                                     $cau_dung++;
                                                 } else {
                                                     $cau_dung += 0;
@@ -236,7 +238,7 @@ if (isset($_GET['id_khoa_hoc']) && $_GET['id_khoa_hoc'] != '' && isset($_GET['id
                                         // echo '<a href="test.php?id_khoa_hoc=' . $id_khoa_hoc . '" class="btn">Xem kết quả</a>';
                                     }
                                 }
-                                $score = (floatval($cau_dung) / 10) * 100;
+                                $score = floatval($cau_dung / $so_cau) * 100;
                                 $hours = floor($time_duration / 3600000);  // 1 hour = 3600000 milliseconds
                                 $minutes = floor(($time_duration % 3600000) / 60000);  // 1 minute = 60000 milliseconds
                                 $seconds = floor((($time_duration % 3600000) % 60000) / 1000);  // 1 second = 1000 milliseconds

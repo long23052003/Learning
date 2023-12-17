@@ -36,7 +36,7 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name_quiz"><span style="color: red;">*</span>Nhập tên câu hỏi</label>
-                    <input class="form-control" type="text" name="ten_cau_hoi" value="<?php echo isset($_POST['ten_cau_hoi']) ? ($_POST['ten_cau_hoi']) : ''; ?>">
+                    <input class="form-control" type="text" name="ten_cau_hoi" value="<?php echo (isset($_POST['ten_cau_hoi']) ? (htmlspecialchars($_POST['ten_cau_hoi'])) : '' )?>">
                 </div>
                 <div class="form-group">
                     <label for="name_quiz">Dạng câu hỏi</label>
